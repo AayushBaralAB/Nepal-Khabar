@@ -211,6 +211,42 @@
       font-size: 16px;
     }
 
+    /* Poll Section */
+    .poll {
+      margin-top: 15px;
+    }
+
+    .poll-options {
+      display: flex;
+      gap: 15px;
+    }
+
+    .poll-option {
+      cursor: pointer;
+      padding: 8px 15px;
+      background-color: #0097a7;
+      color: white;
+      border-radius: 5px;
+      transition: background-color 0.2s;
+    }
+
+    .poll-option:hover {
+      background-color: #007c91;
+    }
+
+    /* GIF Upload */
+    .gif-upload {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .gif-upload input {
+      padding: 5px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+    }
+
     /* Responsive Design */
     @media screen and (max-width: 768px) {
       .container {
@@ -291,6 +327,22 @@
       <textarea id="post-input" placeholder="What's on your mind?"></textarea>
       <button id="post-btn">Post</button>
 
+      <!-- File upload options -->
+      <div class="gif-upload">
+        <input type="file" id="image-upload" accept="image/*">
+        <input type="file" id="video-upload" accept="video/*">
+        <input type="url" id="gif-url" placeholder="Enter GIF URL">
+      </div>
+
+      <div class="poll">
+        <h3>Poll:</h3>
+        <div class="poll-options">
+          <button class="poll-option">Option 1</button>
+          <button class="poll-option">Option 2</button>
+          <button class="poll-option">Option 3</button>
+        </div>
+      </div>
+
       <div id="posts">
         <!-- User posts will be displayed here -->
       </div>
@@ -323,7 +375,73 @@
     const postBtn = document.getElementById('post-btn');
     const postInput = document.getElementById('post-input');
     const postsContainer = document.getElementById('posts');
+    const imageUpload = document.getElementById('image-upload');
+    const videoUpload = document.getElementById('video-upload');
+    const gifUrl = document.getElementById('gif-url');
 
     postBtn.addEventListener('click', () => {
       const postContent = postInput.value.trim();
-      if (
+      const file = imageUpload.files[0] || videoUpload.files[0];
+      const gif = gifUrl.value.trim();
+
+      if (postContent !== "" || file || gif !== "") {
+        const postElement = document.createElement('div');
+        postElement.classList.add('post');
+
+        // Post Text
+        const postText = document.createElement('div');
+        postText.classList.add('post-text');
+        const postTextContent = document.createElement('p');
+        postTextContent.textContent = postContent;
+        postText.appendChild(postTextContent);
+
+        // Attach Image/Video
+        if (file) {
+          const mediaElement = document.createElement(file.type.startsWith('image') ? 'img' : 'video');
+          if (file.type.startsWith('image')) {
+            mediaElement.src = URL.createObjectURL(file);
+            mediaElement.alt = "Uploaded image";
+          } else {
+            mediaElement.src = URL.createObjectURL(file);
+            mediaElement.controls = true;
+          }
+          postText.appendChild(mediaElement);
+        }
+
+        // Attach GIF
+        if (gif) {
+          const gifElement = document.createElement('img');
+          gifElement.src = gif;
+          gifElement.alt = "GIF";
+          postText.appendChild(gifElement);
+        }
+
+        postElement.appendChild(postText);
+
+        // Reactions
+        const reactionsContainer = document.createElement('div');
+        reactionsContainer.classList.add('reactions');
+        const reactions = ['👍', '❤️', '😂', '😢', '😡']; // Emojis for reactions
+
+        reactions.forEach(reaction => {
+          const reactionElement = document.createElement('span');
+          reactionElement.classList.add('reaction');
+          reactionElement.textContent = reaction;
+          reactionElement.addEventListener('click', () => {
+            alert(`You reacted with: ${reaction}`);
+          });
+          reactionsContainer.appendChild(reactionElement);
+        });
+
+        postElement.appendChild(reactionsContainer);
+        postsContainer.appendChild(postElement);
+
+        postInput.value = ""; // Clear input
+        gifUrl.value = ""; // Clear GIF URL
+        imageUpload.value = ""; // Clear file input
+        videoUpload.value = ""; // Clear file input
+      }
+    });
+  </script>
+</body>
+</html>
