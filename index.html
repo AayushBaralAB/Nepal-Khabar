@@ -33,6 +33,17 @@
       display: flex;
       justify-content: center;
       list-style-type: none;
+      margin-bottom: 20px;
+    }
+
+    /* Main menu section */
+    .main-menu {
+      flex-grow: 1;
+    }
+
+    /* Settings menu section */
+    .settings-menu {
+      position: relative;
     }
 
     nav ul li {
@@ -54,8 +65,8 @@
       background-color: #007c91;
     }
 
-    /* Dropdown menu styling */
-    nav ul li .submenu {
+    /* Dropdown menu styling for Settings */
+    .submenu {
       display: none;
       position: absolute;
       top: 100%;
@@ -193,6 +204,26 @@
       margin-bottom: 10px;
     }
 
+    /* Footer styling */
+    footer {
+      background-color: #0097a7;
+      color: white;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 8px;
+      margin-top: 30px;
+    }
+
+    footer .logo img {
+      width: 100px; /* Adjust logo size */
+    }
+
+    footer .footer-text {
+      font-size: 16px;
+    }
+
     /* Responsive Design */
     @media screen and (max-width: 768px) {
       .container {
@@ -215,6 +246,20 @@
       nav ul li {
         margin-bottom: 10px;
       }
+
+      .main-menu {
+        width: 100%;
+        margin-bottom: 20px;
+      }
+
+      footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      footer .logo img {
+        width: 80px; /* Adjust logo size for smaller screens */
+      }
     }
   </style>
 </head>
@@ -222,12 +267,15 @@
   <!-- Navigation Menu -->
   <nav>
     <ul>
-      <li><a href="#">Home</a></li>
-      <li><a href="#">Friend Request</a></li>
-      <li><a href="#">Chats</a></li>
-      <li><a href="#">Videos</a></li>
-      <li><a href="#">LIVE</a></li>
-      <li>
+      <!-- Main Menu Section -->
+      <li class="main-menu"><a href="#">Home</a></li>
+      <li class="main-menu"><a href="#">Friend Request</a></li>
+      <li class="main-menu"><a href="#">Chats</a></li>
+      <li class="main-menu"><a href="#">Videos</a></li>
+      <li class="main-menu"><a href="#">LIVE</a></li>
+
+      <!-- Settings Menu Section -->
+      <li class="settings-menu">
         <a href="#">Settings</a>
         <div class="submenu">
           <a href="#">Help</a>
@@ -265,49 +313,18 @@
     </div>
   </div>
 
+  <!-- Footer Section -->
+  <footer>
+    <div class="footer-text">
+      <p>&copy; 2025 Nepal Khabar. All rights reserved.</p>
+    </div>
+    <div class="logo">
+      <img src="https://via.placeholder.com/100" alt="Nepal Khabar Logo"> <!-- Replace with actual logo -->
+    </div>
+  </footer>
+
   <script>
     // Chat functionality
     const sendBtn = document.getElementById('send-btn');
     const chatInput = document.getElementById('chat-input');
-    const chatBox = document.getElementById('chat-box');
-
-    sendBtn.addEventListener('click', () => {
-      const message = chatInput.value.trim();
-      if (message !== "") {
-        const messageElement = document.createElement('div');
-        messageElement.classList.add('message');
-        messageElement.innerText = message;
-        chatBox.appendChild(messageElement);
-        chatInput.value = "";
-        chatBox.scrollTop = chatBox.scrollHeight;
-      }
-    });
-
-    // Post functionality
-    const postBtn = document.getElementById('post-btn');
-    const postInput = document.getElementById('post-input');
-    const postsContainer = document.getElementById('posts');
-
-    postBtn.addEventListener('click', () => {
-      const postContent = postInput.value.trim();
-      if (postContent !== "") {
-        const postElement = document.createElement('div');
-        postElement.classList.add('post');
-
-        // Avatar and post content
-        const postAvatar = document.createElement('img');
-        postAvatar.src = 'https://via.placeholder.com/40'; // Placeholder Avatar
-        const postText = document.createElement('div');
-        postText.classList.add('post-text');
-        postText.innerHTML = `<p>${postContent}</p>`;
-
-        postElement.appendChild(postAvatar);
-        postElement.appendChild(postText);
-
-        postsContainer.prepend(postElement);
-        postInput.value = "";
-      }
-    });
-  </script>
-</body>
-</html>
+    const chatBox = document.getElementById('chat-box
