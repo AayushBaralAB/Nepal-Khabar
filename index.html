@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nepal Khabar</title>
+  <title>Nepal Khabar - Social Platform</title>
   <style>
+    /* Reset default styling */
     * {
       margin: 0;
       padding: 0;
@@ -12,212 +13,208 @@
     }
 
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f7f7f7;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
     }
 
-    #app {
-      width: 100%;
-      max-width: 400px;
-      background-color: #fff;
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
       padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
 
-    .page {
-      display: none;
-    }
-
-    .visible {
-      display: block;
-    }
-
-    button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      background-color: #007bff;
+    header {
+      text-align: center;
+      padding: 20px;
+      background-color: #0097a7;
       color: white;
-      border: none;
+      border-radius: 8px;
+      margin-bottom: 30px;
+    }
+
+    header h1 {
+      font-size: 40px;
+      letter-spacing: 2px;
+    }
+
+    .chat-container, .post-container {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+      padding: 20px;
+    }
+
+    .chat-container {
+      margin-top: 20px;
+    }
+
+    .chat-box {
+      height: 300px;
+      overflow-y: scroll;
+      border: 1px solid #ddd;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      background-color: #fafafa;
+    }
+
+    .chat-box .message {
+      background-color: #e0f7fa;
+      padding: 8px;
       border-radius: 5px;
-      cursor: pointer;
+      margin-bottom: 10px;
+      word-wrap: break-word;
+      max-width: 80%;
     }
 
-    button:hover {
-      background-color: #0056b3;
-    }
-
-    input, textarea {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
+    input, button, textarea {
+      padding: 12px;
+      font-size: 16px;
+      margin: 8px 0;
       border: 1px solid #ddd;
       border-radius: 5px;
     }
 
-    textarea {
-      height: 100px;
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: #0097a7;
     }
 
-    #chat-users {
-      margin-top: 20px;
+    button {
+      background-color: #0097a7;
+      color: white;
+      cursor: pointer;
+      border: none;
+      font-weight: bold;
     }
 
-    #chat-box {
-      margin-top: 10px;
-      border-top: 1px solid #ddd;
-      padding-top: 10px;
+    button:hover {
+      background-color: #007c91;
     }
 
-    #chat-box div {
-      margin-bottom: 5px;
+    .post-container textarea {
+      width: 100%;
+      min-height: 100px;
+      resize: none;
+      margin-bottom: 15px;
     }
 
-    a {
-      color: #007bff;
+    .post {
+      background-color: #e0f7fa;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      font-size: 18px;
+      word-wrap: break-word;
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .post img {
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      margin-right: 15px;
+    }
+
+    .post-text {
+      flex-grow: 1;
+    }
+
+    .post-text p {
+      margin-bottom: 10px;
+    }
+
+    /* Responsive Design */
+    @media screen and (max-width: 768px) {
+      .container {
+        width: 100%;
+        padding: 10px;
+      }
+
+      header h1 {
+        font-size: 32px;
+      }
+
+      .post-container textarea {
+        font-size: 14px;
+      }
     }
   </style>
 </head>
 <body>
-  <div id="app">
-    <!-- Login Page -->
-    <div id="login-page" class="page visible">
-      <h2>Nepal Khabar - Login</h2>
-      <input type="text" id="login-username" placeholder="Username" />
-      <input type="password" id="login-password" placeholder="Password" />
-      <button onclick="login()">Login</button>
-      <p>Don't have an account? <a href="javascript:void(0)" onclick="showSignupPage()">Create Account</a></p>
+  <div class="container">
+    <header>
+      <h1>Nepal Khabar</h1>
+      <p>Your go-to place for all things Nepal</p>
+    </header>
+
+    <!-- Chat Section -->
+    <div class="chat-container">
+      <h2>Chat with Us</h2>
+      <div class="chat-box" id="chat-box"></div>
+      <input type="text" id="chat-input" placeholder="Type a message...">
+      <button id="send-btn">Send</button>
     </div>
 
-    <!-- Signup Page -->
-    <div id="signup-page" class="page">
-      <h2>Nepal Khabar - Create Account</h2>
-      <input type="text" id="signup-username" placeholder="Username" />
-      <input type="password" id="signup-password" placeholder="Password" />
-      <button onclick="signup()">Sign Up</button>
-      <p>Already have an account? <a href="javascript:void(0)" onclick="showLoginPage()">Login</a></p>
-    </div>
+    <!-- Post Section -->
+    <div class="post-container">
+      <h2>Create a Post</h2>
+      <textarea id="post-input" placeholder="What's on your mind?"></textarea>
+      <button id="post-btn">Post</button>
 
-    <!-- Main Page (After Login) -->
-    <div id="main-page" class="page">
-      <h2>Welcome to Nepal Khabar</h2>
-      <div id="user-info">
-        <h3>User: <span id="logged-in-username"></span></h3>
-        <button onclick="logout()">Logout</button>
-      </div>
-
-      <!-- Post Creation -->
-      <div id="create-post">
-        <textarea id="post-text" placeholder="What's on your mind?"></textarea>
-        <button onclick="createPost()">Create Post</button>
-      </div>
-
-      <!-- Chat Section -->
-      <div id="chat">
-        <h3>Chat with Users</h3>
-        <div id="chat-users">
-          <!-- Chat Users List -->
-        </div>
-        <textarea id="chat-message" placeholder="Type a message"></textarea>
-        <button onclick="sendMessage()">Send</button>
-        <div id="chat-box"></div>
+      <div id="posts">
+        <!-- User posts will be displayed here -->
       </div>
     </div>
   </div>
 
   <script>
-    let currentUser = null;
+    // Chat functionality
+    const sendBtn = document.getElementById('send-btn');
+    const chatInput = document.getElementById('chat-input');
+    const chatBox = document.getElementById('chat-box');
 
-    // Show the Login page
-    function showLoginPage() {
-      document.getElementById("signup-page").classList.remove("visible");
-      document.getElementById("login-page").classList.add("visible");
-      document.getElementById("main-page").classList.remove("visible");
-    }
-
-    // Show the Signup page
-    function showSignupPage() {
-      document.getElementById("login-page").classList.remove("visible");
-      document.getElementById("signup-page").classList.add("visible");
-      document.getElementById("main-page").classList.remove("visible");
-    }
-
-    // Show the main page after login
-    function showMainPage() {
-      document.getElementById("login-page").classList.remove("visible");
-      document.getElementById("signup-page").classList.remove("visible");
-      document.getElementById("main-page").classList.add("visible");
-    }
-
-    // Handle user login
-    function login() {
-      const username = document.getElementById("login-username").value;
-      const password = document.getElementById("login-password").value;
-
-      // Mock login: check if username and password are correct
-      if (username === "user" && password === "password") {
-        currentUser = username;
-        document.getElementById("logged-in-username").innerText = currentUser;
-        showMainPage();
-      } else {
-        alert("Invalid username or password!");
+    sendBtn.addEventListener('click', () => {
+      const message = chatInput.value.trim();
+      if (message !== "") {
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('message');
+        messageElement.innerText = message;
+        chatBox.appendChild(messageElement);
+        chatInput.value = "";
+        chatBox.scrollTop = chatBox.scrollHeight;
       }
-    }
+    });
 
-    // Handle user signup
-    function signup() {
-      const username = document.getElementById("signup-username").value;
-      const password = document.getElementById("signup-password").value;
+    // Post functionality
+    const postBtn = document.getElementById('post-btn');
+    const postInput = document.getElementById('post-input');
+    const postsContainer = document.getElementById('posts');
 
-      // Mock account creation: check if username is not empty
-      if (username && password) {
-        alert("Account created successfully! Now you can log in.");
-        showLoginPage();
-      } else {
-        alert("Please provide valid username and password!");
+    postBtn.addEventListener('click', () => {
+      const postContent = postInput.value.trim();
+      if (postContent !== "") {
+        const postElement = document.createElement('div');
+        postElement.classList.add('post');
+
+        // Avatar and post content
+        const postAvatar = document.createElement('img');
+        postAvatar.src = 'https://via.placeholder.com/40'; // Placeholder Avatar
+        const postText = document.createElement('div');
+        postText.classList.add('post-text');
+        postText.innerHTML = `<p>${postContent}</p>`;
+
+        postElement.appendChild(postAvatar);
+        postElement.appendChild(postText);
+
+        postsContainer.prepend(postElement);
+        postInput.value = "";
       }
-    }
-
-    // Handle user logout
-    function logout() {
-      currentUser = null;
-      showLoginPage();
-    }
-
-    // Create a post
-    function createPost() {
-      const postText = document.getElementById("post-text").value;
-      if (postText) {
-        alert("Post created successfully!");
-        document.getElementById("post-text").value = "";
-      } else {
-        alert("Please write something to post!");
-      }
-    }
-
-    // Send a message in the chat
-    function sendMessage() {
-      const message = document.getElementById("chat-message").value;
-      if (message) {
-        const chatBox = document.getElementById("chat-box");
-        const newMessage = document.createElement("div");
-        newMessage.innerText = `User: ${message}`;
-        chatBox.appendChild(newMessage);
-        document.getElementById("chat-message").value = "";
-      } else {
-        alert("Please type a message!");
-      }
-    }
-
-    // Auto show login page when the app loads
-    window.onload = function() {
-      showLoginPage();
-    };
+    });
   </script>
 </body>
 </html>
